@@ -1,18 +1,17 @@
-import { ADD_CLIENTE } from "../actions";
+import { ADD_CLIENTE, REMOVE_CLIENTE } from "../actions";
 
 const INITIAL_STATE = {
     clientes: [
-        {
-            cadastroNome: '', cadastroEmail: '', cadastroIdade: '', id:'',
 
-        }
     ],
 };
 
-const clientesReducer = (state = INITIAL_STATE, action) => {
- switch(action.type) {
+const clientesReducer = (state = INITIAL_STATE, {type, payLoad}) => {
+ switch(type) {
    case ADD_CLIENTE:
-       return { ...state, clientes: [...state.clientes, action.payLoad] };
+       return { ...state, clientes: [...state.clientes, { id:Math.floor(Math.random() *5379), payLoad } ] };
+    case REMOVE_CLIENTE:
+        return { ...state, clientes: state.clientes.filter(cliente => cliente.id !== payLoad) };
     default:
     return state;
  }

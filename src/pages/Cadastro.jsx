@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {addCliente} from '../actions/index';
+import { addCliente} from '../redux/actions/';
+import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
 class Cadastro extends Component {
-    state = { cadastroNome: '', cadastroEmail: '', cadastroIdade: ''   } 
+    constructor(props) {
+        super(props);
+        this.state = {cadastroNome: '', cadastroEmail: '', cadastroIdade: '', cadastroId: ''};
+    }; 
 
     handleChange = (event) => {
         const { name, value } = event.target;
@@ -13,7 +17,6 @@ class Cadastro extends Component {
       handleSubmit = (event) => { 
           const {history, cadastrar} = this.props;
           event.preventDefault();
-          this.setState({ login: true });
           cadastrar(this.state);
           history.push('/clientes');
       }
@@ -22,13 +25,13 @@ class Cadastro extends Component {
         return (
             <form>
                 <label>Nome
-                    <input name="cadastroNome" type="text" />
+                    <input name="cadastroNome" type="text" onChange={this.handleChange} />
                 </label>
                 <label>Email
-                    <input name="cadastroEmail" type="email" />
+                    <input name="cadastroEmail" type="email" onChange={this.handleChange} />
                 </label>
                 <label>Idade
-                    <input name="cadastroIdade" type="number" />
+                    <input name="cadastroIdade" type="number" onChange={this.handleChange} />
                 </label>
                 <button type="submit" onClick={this.handleSubmit} >Cadastrar</button>
             </form>
@@ -37,7 +40,7 @@ class Cadastro extends Component {
 }
  
 const mapDispatchToProps = (dispatch) => ({    
-    cadastrar: (state) => dispatch(addCliente(state))    
+    cadastrar: (state) => dispatch(addCliente(state))
 })
 
 Cadastro.propTypes = {
